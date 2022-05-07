@@ -39,7 +39,7 @@ public class IOTest {
         Scanner readFile=new Scanner(Paths.get("myfile.txt"),"UTF-8");
         //Writing to a file
         PrintWriter writeFile=new PrintWriter("myfile.txt","UTF-8");
-        writeFile.println("written");
+        writeFile.printf("written");
     }
 
 }

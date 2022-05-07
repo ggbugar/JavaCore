@@ -3,7 +3,6 @@ import java.math.*;
 import java.util.*;
 /**
  * test BigInteger
- * @author lxb
  */
 public class BigIntegerTest {
     public static void main(String[] args) {

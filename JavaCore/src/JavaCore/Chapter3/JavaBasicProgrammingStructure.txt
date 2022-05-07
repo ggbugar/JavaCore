@@ -69,6 +69,16 @@ Java中一共有八种基本类型：
 变量名由字母开头的字母、数字和下划线组成，大小写敏感，不能为Java保留关键字。
 
 3.4.1变量初始化
+声明一个变量后，必须使用赋值语句对变量进行初始化，千万不要使用未初始化的变量
+{
+int variable;
+System.out.println(variable);
+}//error
+
+{
+int variable=0;
+System.out.println(variable);
+}//right
 
 3.4.2常量
 //使用final声明常量
@@ -105,11 +115,23 @@ boolean运算符:||,&&,!
 ...
 
 3.5.4 数学函数与常量
+    Math methods:
+    Math.sqrt();
+    Math.pow(x,a);
+    Math.sin()
+    Math.cos()
+    ...
+    Math.exp();
+    Math.log();
+    Math Constants:
+    Math.PI;
+    Math.E
 
 3.5.5 数值类型转换
+向上自动转换
 
 3.5.6 强制类型转换
-
+int a=(int) double;
 舍入操作:Math.round()
 
 3.5.7 括号与运算符级别
@@ -123,9 +145,71 @@ enum Size{
     null值表示该变量未设置任何值
 
 3.6 字符串
+String important API:
+    char charAt(int index);
+    int codePointAt(int index);
+    int offsetByCodePoints(int startIndex,int cpCount);
+    int compareTo(String other);
+    boolean endWith(String suffix);
+    boolean equals(Object other);
+    boolean equalsIgnoreCase(String other);
+    int indexOf{String str);
+    int indexOf(String str,int fromIndex);
+    int indexOf(int cp);
+    int indexOf(int cp,int fromIndex);
+    int lastIndexOf(String str);
+    int lastIndexOf(String str,int fromIndex);
+    int lastIndexOf(int cp);
+    int lastIndexOf(int cp,int fromIndex);
+    int length();
+    int codePointCount(int startIndex,int endIndex);
+    String replace(CharSequence oldString,CharSequence newString);
+    boolean startWith(String prefix);
+    String substring(int beginIndex);
+    String subString(int beginIndex,int endIndex);
+    String toLowerCase();
+    String toUpperCase();
+    String trim();//返回一个新字符串，为原字符串删去头尾的空格
+
+StringBuilder important API:
+    StringBuilder important API
+    StringBuilder();
+    int length();
+    StringBuilder append(char c);
+    StringBuilder appendCodePoint(int cp);
+    void setCharAt(int i,char c);
+    StringBuilder insert(int offset,String str);
+    StringBuilder insert(int offset,char c);
+    StringBuilder delete(int startIndex,int endIndex);
+    String toString();
+
+StringBuffer important API:
+
 
 3.7 输入输出
+Scanner in=new Scanner(System.in);
+    in.next()
+    in.nextLine()
+    in.nextInt()
+    in.nextDouble()
 
+//Reading from a file
+Scanner readFile=new Scanner(Paths.get("myfile.txt"),"UTF-8");
+
+System.out.println();
+System.out.printf();
+
+//Writing to a file
+PrintWriter writeFile=new PrintWriter("myfile.txt","UTF-8");
+writeFile.println("written");
+
+必须抛出异常：
+public class IO{
+    public static void main(String[] args) throws IOException {
+    }
+}
+
+}
 3.8 流程控制
 
 块作用域：
@@ -198,6 +282,8 @@ BigInteger important API:
     Biginteger mod(Biginteger other);
     int compareTo(Biginteger other);
     static Biginteger valueOf(long x);
+
+example:BigIntegerTest.java
 
 BigDecimal important API:
     BigDecimal add(BigDecimal other);
@@ -285,16 +371,10 @@ int[][] MulArray={
 }
 example:CompoundInterest.java
 
-3.10.7
-
-
-
-
-
-
-
-
-
+3.10.7 不规则数组
+//各列长度不一
+int[][] array =new int[n][];
+example:lotteryArray.java
 
 
 

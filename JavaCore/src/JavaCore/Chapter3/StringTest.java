@@ -1,5 +1,7 @@
 package JavaCore.Chapter3;
-
+/**
+ * test String
+ */
 public class StringTest {
     public static void main(String[] args) {
         String e="";//an empty string

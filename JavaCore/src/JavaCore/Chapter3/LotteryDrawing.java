@@ -4,7 +4,6 @@ import java.util.*;
 /**
  * test in[]
  * help people to choose lottery
- * @author lxb
  */
 public class LotteryDrawing {
     public static void main(String[] args) {
