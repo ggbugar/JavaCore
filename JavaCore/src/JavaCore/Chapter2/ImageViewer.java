@@ -12,9 +12,6 @@ import javax.swing.*;
  * @version 1 2022-05-05
  * @author LXB
  */
-
-
-
 public class ImageViewer {
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable(){

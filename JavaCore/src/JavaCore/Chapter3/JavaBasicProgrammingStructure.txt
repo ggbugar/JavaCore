@@ -1,0 +1,300 @@
+#第三章.Java基本的程序设计结构
+3.1 一个简单的Java程序
+/**
+*File name:FirstSample.java
+*/
+public class FirstSample {
+    public static void main(String[] args) {
+        System.out.println("we will not use 'hello world!'.");
+    }
+
+3.2 注释:comments
+单行注释：
+//
+多行注释：
+/*
+与C++一样，不能套嵌注释
+*/
+文档注释：
+/**
+*
+*
+*/
+
+3.3 数据类型
+Java是一种强类型语言：必须为每一个变量声明一种类型。
+Java中一共有八种基本类型：
+    byte,short,int,long,float,double,char,boolean
+
+3.3.1 4种整型：
+    byte    1字节 8bit
+    short   2字节
+    int     4字节
+    long    8字节
+    literals:
+    Long:4000000000L
+    Hex :0xCAFE
+    Binary:0b1111_0100_0010_0100_0000
+
+3.3.3 2种浮点型：
+    float   4字节
+    double  8字节
+    literals:
+    float f=0.5f
+    特殊值：
+    正无穷：Double.POSITIVE_INFINITY
+    负无穷：Double.NEGATIVE_INFINITY
+    不是一个数:DOUBLE.NaN
+3.3.3 字符型：
+    char
+    literals:
+    char c='c'；
+    Unicode编码：16位 \u0000到\Uffff
+    转义字符序列：
+    \u...
+    特殊字符的转义序列符：
+    转义序列  名称
+    \b      退格
+    \t      制表
+    \n      换行
+    \r      回车
+    \"      双引号
+    \'      单引号
+    \\      反斜杠
+
+3.3.4 布尔型：
+    boolean: true,false
+
+3.4变量
+变量名由字母开头的字母、数字和下划线组成，大小写敏感，不能为Java保留关键字。
+
+3.4.1变量初始化
+
+3.4.2常量
+//使用final声明常量
+public class Constants {
+    public static void main(String[] args) {
+        final double CM_PER_INCH=2.45;//
+        double paperWidth=8.5;
+        double paperHeight=11;
+        System.out.println("Paper size in centimeters:"
+                +paperWidth*CM_PER_INCH+" by "+paperHeight*CM_PER_INCH);
+    }
+}
+//使用static final设置类常量，该类的多个方法均可以用该常量
+//类常量定义必须在main方法的外部
+public class Constants2 {
+    //使用static final设置类常量，该类的多个方法均可以用该常量
+    static final double CM_PER_INCH=2.45;
+    public static void main(String[] args) {
+        double paperWidth=8.5;
+        double paperHeight=11;
+        System.out.println("Paper size in centimeters:"
+                +paperWidth*CM_PER_INCH+" by "+paperHeight*CM_PER_INCH);
+    }
+}
+
+3.5 运算符
+3.5.1 各种运算符
+算术运算符:+,-,*,/,%
+自增自减运算符:++,--,前缀,后缀的区别！
+关系运算符:==,!=,>,>=,<,<=
+boolean运算符:||,&&,!
+位运算符:&,|,^,!,>>,<<
+三目运算符：condition?expression1:expression2
+...
+
+3.5.4 数学函数与常量
+
+3.5.5 数值类型转换
+
+3.5.6 强制类型转换
+
+舍入操作:Math.round()
+
+3.5.7 括号与运算符级别
+
+3.5.8 枚举类型
+enum Size{
+    SMALL,MEDIUM,LARGE,EXTRA_LARGE
+    }
+    Size s=Size.SMALL;
+    Size类型变量只能存储该类型声明中给定的某个枚举值，或者null值
+    null值表示该变量未设置任何值
+
+3.6 字符串
+
+3.7 输入输出
+
+3.8 流程控制
+
+块作用域：
+
+if语句:
+    if(){}
+    else if(){}
+    else(){}
+
+while语句:
+    while(){
+
+    }
+
+    do{
+
+    }while();
+
+switch语句：
+switch(choice){
+    case 1:
+    {}
+    break;
+    case 2:
+    {}
+    break;
+    ...
+    default:
+    {}
+    break;
+}
+
+for语句：
+for(int i=0;i<n;i++){
+
+}
+
+for each loop:
+
+for(element e:a){
+    visit(e);
+}
+break语句：
+while()
+{
+    if()break;
+}
+
+带标签的break语句：
+label:
+while(){
+    while(){
+        if()break label;
+    }
+}
+
+label:
+{
+if(condition)break;
+}
+}
+continue语句：
+
+3.9 大数值
+BigInteger important API:
+    Biginteger add(Biginteger other);
+    Biginteger subtract(Biginteger other);
+    Biginteger multiply(Biginteger other);
+    Biginteger divide(Biginteger other);
+    Biginteger mod(Biginteger other);
+    int compareTo(Biginteger other);
+    static Biginteger valueOf(long x);
+
+BigDecimal important API:
+    BigDecimal add(BigDecimal other);
+    BigDecimal subtract(BigDecimal other);
+    BigDecimal multiply(BigDecimal other);
+    BigDecimal divide(BigDecimal other);
+    BigDecimal mod(BigDecimal other);
+    int compareTo(BigDecimal other);
+    static BigDecimal valueOf(long x);
+    static BigDecimal valueOf(long x,int scale);
+
+3.10 数组
+声明：
+int[] a;
+int a[];
+创建数组（分配内存）：
+int[] a=new int[n];
+数组下标：[0,n)
+下标越界会引发 array index out of bounds 异常而终止执行
+数组元素个数:array.length
+
+3.10.1 for each loop
+for(variable e:collection){
+    statement;
+}
+example:
+int[] array={1,2,3,4,5,6,7};
+for(int i:array)
+    System.out.println(i);
+
+3.10.2 数组初始化以及匿名数组
+数组初始化:
+int[] array={1,2,3,4,5,6,7};
+匿名数组:
+new int[]{1,2,3,4,5,6,7};
+匿名数组用法：在不创建新变量的情况侠重新初始化一个数组
+array = new int[]{1,2,3,4,5,6,7};
+
+3.10.3 数组拷贝
+int[] luckNumbers=array;
+luckNumbers[1]=100;//array[1] now is also 100
+the two variables share the same memory,not real copy
+
+//correct method
+int[] copyArray=Arrays.copyOf(array,copyArray.length);
+
+3.10.4 命令行参数
+public class Message{
+    public static void main(String args[]){
+
+    }
+}
+
+如果如此运行该程序：java Message -g cruel world
+    args[0]="-g"
+    args[1]="cruel"
+    args[2]="world"
+
+3.10.5 数组排序
+int[] a=new int[1000];
+...
+Arrays.sort(a);
+
+Arrays important API:
+    static String toString(type[] a);
+    static type copyOf(type[],int length);
+    static void sort(type[] a);
+    static int binarySearch(type[] a,type v);
+    static int binarySearch(type[] a,int start,int end,type v);
+    static void fill(type[] a,type v);
+    static boolean equals(type[] a,type[] b);
+    static void arraycopy(Object from,int fromIndex,Object to,int to Index,int count);
+
+3.10.6 多维数组
+声明：
+int[][] MulArray;
+创建（分配内存）：
+int[][] MulArray=new int[hang][lie];
+初始化：
+int[][] MulArray={
+    {16,3,2,13},
+    {5,10,11,8},
+    {9,6,7,12},
+    {4,15,14,1},
+}
+example:CompoundInterest.java
+
+3.10.7
+
+
+
+
+
+
+
+
+
+
+
+
