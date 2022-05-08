@@ -1,0 +1,463 @@
+#第四章.对象与类
+
+内容概述：
+    面向对象程序设计概述
+    使用现有类
+    用户自定义类
+    静态域和方法
+    方法参数
+    对象构造
+    包
+    类路径
+    文档注释
+    类设计技巧
+
+4.1 面向对象程序设计概述
+封装 继承 多态
+4.1.1 类
+
+4.1.2 对象
+对象的三个主要特性：
+对象的行为
+对象的状态
+对象的标识
+
+4.1.3 识别类
+名词动词法
+
+4.1.4 类之间的关系
+依赖  uses a  一个类的方法操纵另一个类的对象
+聚合  has a   类A的对象包含类B的对象
+继承  is a    class A extends B{}
+
+4.2 使用现有类
+
+4.2.1 对象与对象变量
+
+4.2.2 Java类库中的GregorianCalendar类
+/**
+ * java.util.GregorianCalendar API
+ *GregorianCalendar()
+ * GregorianCalendar(int year,int month,int day)
+ * GregorianCalendar(int year,int month,int day,int hour,int minutes,int seconds)
+ * int get(int field)
+ * void set(int field,int value)
+ * void set(int year,int month,int day)
+ * void set(int year,int month,int day,int hour,int minutes,int seconds)
+ * void add(int field,int amount)
+ * int getFirstDayOfWeek()
+ * void setTime(Date time)
+ * Date getTime()
+ */
+
+ /**
+  * java.text.DateFormatSymbols important API for Date
+  * String[] getShortWeekdays()
+  * String[] getShortMonths()
+  * String[] getWeekdays()
+  * String[] getMonths()
+  */
+
+4.2.3 更改器方法和访问器方法
+setName();
+getName();
+
+4.3 用户自定义类
+
+4.3.1 Employee 类
+class Employee{
+    public static void main(String[] args) {
+        Employee e=new Employee("Bob",7500,2022,3,5);
+        e.setSalary(10000);
+        e.raiseSalary(5);
+        System.out.println("name="+e.getName()+",salary="+e.getSalary()+",hirDay="+e.getHireDay());
+    }
+
+    public Employee(String n,double s,int year,int month,int day){
+        name=n;
+        salary=s;
+        GregorianCalendar calendar=new GregorianCalendar(year,month-1,day);
+        //GGregorianCalendar uses 0 for January
+        hireDay=calendar.getTime();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public void raiseSalary(double byPercent){
+        this.salary=this.salary*(1+byPercent/100);
+    }
+
+    public Date getHireDay() {
+        return hireDay;
+    }
+
+    private final String name;
+    private double salary;
+    private final Date hireDay;
+}
+
+4.3.2 多个源文件的使用
+Example:EmployeeTest.java
+方法1：使用通配符*
+javac Employee*.java
+方法2：
+javac EmployeeTest.java
+
+4.3.3 解析Employee类
+
+4.3.4 构造器
+    构造器与类同名
+    每个类可以有一个一上构造器
+    构造器可以有0个、1个或1个以上个参数
+    构造器没有返回值
+    构造器总是和new一起调用
+
+4.3.5 隐式参数与显式参数
+隐式参数：this
+显式参数：methods(params)
+
+4.3.6 封装的优点
+
+4.3.7 基于类的访问权限
+
+4.3.8 私有方法
+
+4.3.9 final实例域
+class E{
+    ...
+    private final String name;
+}
+构建对象时必须初始化final实例域
+一旦初始化将不能够对塔进行修改
+如果是基本类型，完全更改不了了
+如果是对象，不能更改成另外一个对象，但可以改对象的内容，
+因为不可变的是储存在变量中的对象引用，并不意味着引用的对象不可变
+但如果是不可变对象如String则完全无法更改
+
+4.4 静态域和静态方法
+4.4.1 静态域
+静态域属于类而不属于任何对象，但任何任何对象都可以访问和更改静态域
+
+4.4.2 静态常量
+public static final double PI=3.1415926
+example:
+    Math.PI
+    System.out
+
+4.4.3 静态方法
+静态方法不对对象实施操作，没有隐式参数this
+
+4.4.4 Factory方法
+
+4.4.5 main方法
+为什么main方法一定是public static void
+由于启动程序时还没有任何一个对象，因此main必须时静态方法，然后创建对象
+
+4.5 方法参数
+//原件与复印件
+public class ParamTest {
+    public static void main(String[] args) {
+
+    }
+    /**
+     * can not work
+     * @param x
+     * @param y
+     */
+    public static void swap(int x,int y){
+        int temp=x;
+        x=y;
+        y=temp;
+    }
+
+    /**
+     * can not work too
+     * you can't swap two objects
+     * you can only swap their values
+     * @param x
+     * @param y
+     */
+    public static void swap(Employee x,Employee y){
+        Employee temp=x;
+        x=y;
+        y=temp;
+    }
+
+    /**
+     * this can swap x and y's salary
+     * @param x
+     * @param y
+     */
+    public static void swap(SEmployee x,SEmployee y){
+        double tempSalary=x.getSalary();
+        x.setSalary(y.getSalary());
+        y.setSalary(tempSalary);
+    }
+}
+
+4.6 对象构造
+
+4.6.1 重载
+构造器和其他方法一样可以重载
+构成重载条件：参数数量、类型、类型顺序不同,仅返回类型不同不构成重载
+example:
+void f(int a,int b)
+void f(int a,int b,int c)
+void f(int a,String b,int c)
+void f(String a,int b,int c)
+
+4.6.2 默认域初始化
+如果构造器中没有显式的给域赋值，就会自动赋为默认值：
+    数值为0
+    bool值为false
+    对象为null
+
+4.6.3 默认构造器
+如果程序员不提供任何构造器，系统自动提供默认无参构造器，将所有实例域设置为默认值
+
+4.6.4 显式域初始化
+class employee{
+    static int assignId(){
+    int r=nextId;
+    nextId++;
+    return r;
+    }
+    private int id=assignId();
+    private String name="";
+}
+当所有构造器都希望把相同的值赋给某个域
+或是仅有极个别构造器希望设置成其他值时
+该操作在构造器执行前执行，极个别的构造器可以在构造器中更改这个初始值
+
+4.6.5 参数名
+两者方法避免
+两者方法避免参数名冲突：
+public Employee(String aName,double aSalary){
+    name=aName;
+    salary=aSalary;
+}
+public Employee(String name,double salary){
+    this.name=name;
+    this.salary=salary;
+}
+
+4.6.6 调用另外一个构造器
+public Employee(String name,double salary){
+    this.name=name;
+    this.salary=salary;
+}
+
+public Employee(String name,double salary,int year,int month,int day){
+    this(name,salary);
+    GregorianCalendar calendar=new GregorianCalendar(year,month-1,day);
+    //GGregorianCalendar uses 0 for January
+    this.hireDay=calendar.getTime();
+}
+
+4.6.7 初始化块
+只要构造类的对象，这些初始化块就会被执行
+每创建一个对象就会执行一次
+example:
+class Employee{
+    private String name;
+    private double salary;
+    private int id;
+    private static int nextId=1;
+    public Employee(){
+    name="";
+    salary=0;
+    }
+    public Employee(String aName,double aSalary){
+    name=aName;
+    salary=aSalary;
+    }
+    //object initialization block
+    {
+    id=nextId;
+    nextId++;
+    }
+}
+
+静态初始化块：
+static
+{
+    Random generator=new Random();
+    nextId-generator.nextInt(10000);
+}
+
+总结：
+初始化静态域的方法：
+1.声明中赋值
+private static int nextId=1;
+2.静态初始化块：
+static
+{
+    Random generator=new Random();
+    nextId-generator.nextInt(10000);
+}
+
+初始化实例域的方法：
+1.构造其中赋值
+2.声明中赋值
+3.初始化块
+
+调用构造器的具体处理步骤：
+1.所有数据域被初始化为默认值
+2.按照在类声明中出现的次序，依次执行所有域初始化语句和初始化块
+3.如果该构造器在第一行调用了其他构造器，先执行其他构造器
+4.最后执行该构造器的主体
+
+4.6.8对象析构与finalize方法
+Java有垃圾回收器，不需要人工回收内存，故不支持析构器
+放对象使用了除内存外的其他资源，可以为类添加finalize方法
+finalize方法在垃圾回收器析构对象前调用
+
+4.7 包
+
+4.7.1 类的导入
+import java.util.*
+
+当导入的两个包中有同名类时，可以专门写一个import语句导入你要用的类
+import java.util.*;
+import java.sql.*;
+import java.util.Date;//表明要用的Date是import java.util.Date
+如果你两个都要用，就得把前缀加上
+java.util.Date ud=new java.util.Date();
+java.util.Date sd=new java.sql.Date();
+
+4.7.2 静态导入
+导入静态域和静态方法
+静态导入一个类后就可以使用其静态域和静态方法
+example:
+import static java.lang.System;
+out.println();
+
+import java.lang.Math;
+sqrt(16);
+pow(3,2);
+
+if(d.get(DAY_OF_WEEK)==Calendar.MONDAY)
+
+import java.util.GregorianCalendar;
+if(d.get(DAY_OF_WEEK)==MONDAY)
+
+用法建议：
+对于算数方法和笨重的常量应该使用静态导入
+
+4.7.3 将类放入包中
+package ggbugar.JavaCore.Chapter4
+
+4.7.4 包作用域
+标记为public的部分可以被任何类使用
+标记为private的部分只能被定义他们的类使用
+如果没有指定public或private，则该部分可被同一个包的所有方法访问
+example:EmployeeTest.java
+
+4.8 类路径
+
+4.9文档注释
+4.9.1 注释的插入
+javadoc工具可以由源文件生成一个HTML文件
+
+4.9.2 类注释
+必须放在import语句后，类定义之前
+/**
+ *
+ *
+ */
+
+4.9.3 方法注释
+/**
+ * 方法注释
+ * @param 参数说明
+ * @return 返回值说明
+ * @throws 表示该方法可能抛出异常
+ */
+
+4.9.4 域注释
+/**
+ * 域注释
+ * 只需要对共有域（通常是静态常量）建立文档
+ */
+public static final int PI=3.1415926
+
+4.9.5 通用注释
+/**
+ * 通用注释
+ * @author name可以有多个该标记
+ * @version text 对当前版本的描述
+ * @since text对引入特性的版本描述
+ * @deprecated text不在使用的注释，text给出取代建议
+ * @see reference 超链接
+ */
+
+4.9.6 包与概述注释
+
+4.9.7 注释的抽取
+package:
+javadoc -d docDirectory nameOfPackage
+lots of packages:
+javadoc -d docDirectory nameOfPackage1 nameOfPackage2...
+文件在默认包中：
+javadoc -d docDirectory *.java
+
+4.10 类设计技巧
+1.一定要将数据设为私有
+
+2.一定要对数据进行初始化
+
+3.不要在类中使用过多基本类型
+
+4.不是所有域都需要独立的修改器和访问器
+
+5.使用标准格式进行类的定义
+标准格式：
+    共有访问特性部分
+    包作用域访问特性部分
+    私有访问特性部分
+在每一部分中，按下列顺序列出：
+    实例方法
+    静态方法
+    实例域
+    静态域
+
+6.将职责过多的类进行分解
+例如：一张牌 和 一副牌
+
+7.类名和方法名要能够体现其职责
+example:
+getName();
+raiseSalary();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
